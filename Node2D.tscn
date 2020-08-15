@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://World.tscn" type="PackedScene" id=1]
+[ext_resource path="res://edgeDetection.shader" type="Shader" id=2]
+[ext_resource path="res://viewportSetup.gd" type="Script" id=3]
+[ext_resource path="res://Viewport.gd" type="Script" id=4]
+[ext_resource path="res://Node2D.gd" type="Script" id=5]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -2.0
+margin_bottom = -3.0
+rect_scale = Vector2( 1.00861, 1.02129 )
+stretch = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 510, 297 )
+size_override_stretch = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Spatial" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+transform = Transform( 0.990387, 0, -0.138326, 0, 1, 0, 0.138326, 0, 0.990387, 0, 0, 0 )
+
+[node name="MeshInstance" parent="ViewportContainer/Viewport/Spatial/RigidBody2" index="0"]
+transform = Transform( -0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, 0, 0, -1.19209e-07 )
+
+[node name="Viewport" parent="ViewportContainer/Viewport/Spatial/Character/KinematicBody/CamBase" index="0"]
+script = ExtResource( 4 )
+[connection signal="ready" from="ViewportContainer/Viewport/Spatial/Character/KinematicBody/CamBase/Viewport" to="ViewportContainer" method="_readyTime"]
+
+[editable path="ViewportContainer/Viewport/Spatial"]
+
+[editable path="ViewportContainer/Viewport/Spatial/Character"]
