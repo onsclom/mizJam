@@ -1,0 +1,24 @@
+extends StaticBody
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+var hoverText = "e to open"
+var openTexture = preload("res://Art/chestOpen.png")
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+	
+func activate(player):
+	hoverText = null
+	get_parent().mesh.material.albedo_texture = openTexture
+	player.activateGun()
+	#this also makes it unusable
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass

@@ -11,7 +11,7 @@ const V_LOOK_SENS = .5
 
 var noise = OpenSimplexNoise.new()
 
-onready var cam = $CamBase
+onready var cam = $CamHolder
 
 var y_velo = 0
 
@@ -28,11 +28,11 @@ func _ready():
 	print(noise.get_noise_3d(0.5, 3.0, 15.0))
 	print(noise.get_noise_4d(0.5, 1.9, 4.7, 0.0))
 	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	pass
 
 func _input(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		cam.rotation_degrees.x -= event.relative.y * V_LOOK_SENS
 		cam.rotation_degrees.x = clamp(cam.rotation_degrees.x, -90, 90)
 		rotation_degrees.y -= event.relative.x * H_LOOK_SENS
@@ -73,3 +73,5 @@ func _physics_process(delta):
 	var random = floor(noise.get_noise_2d(1.0, time*10)*10)
 	$Light1.omni_range = 25.0 + random
 	$Light2.omni_range = 35.0 + random
+	
+

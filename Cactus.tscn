@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Art/Cactus.png" type="Texture" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_transparent = true
+params_diffuse_mode = 4
+params_specular_mode = 4
+params_billboard_mode = 2
+albedo_texture = ExtResource( 1 )
+metallic_specular = 0.0
+roughness = 0.0
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 1 )
+size = Vector2( 4, 4 )
+
+[sub_resource type="CapsuleShape" id=3]
+height = 2.0
+
+[node name="Cactus" type="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8152, 3, -2.95459 )
+extra_cull_margin = 16384.0
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 3 )
