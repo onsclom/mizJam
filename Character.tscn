@@ -100,7 +100,7 @@ light_indirect_energy = 0.0
 light_specular = 0.0
 light_bake_mode = 2
 shadow_bias = 10.0
-omni_range = 35.0
+omni_range = 45.0
 omni_attenuation = 1e-05
 omni_shadow_mode = 0
 omni_shadow_detail = 0
@@ -112,22 +112,27 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.142, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19209e-07, 0 )
 cull_mask = 524287
 current = true
+far = 50.0
 script = ExtResource( 7 )
 
 [node name="RayCast" type="RayCast" parent="KinematicBody/CamHolder/CamBase"]
 enabled = true
 cast_to = Vector3( 0, 0, -2 )
 
+[node name="DebugCamera" type="Camera" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 164.221, 0 )
+far = 1000.0
+
 [node name="CameraLag" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1289, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="CameraLag"]
-transform = Transform( 0.508205, 0.706588, 0.492404, -0.852868, 0.492404, 0.173648, -0.119764, -0.508204, 0.852868, -0.388, -0.167341, -0.62824 )
+transform = Transform( 0.508205, 0.706588, 0.492404, -0.852868, 0.492404, 0.173648, -0.119764, -0.508204, 0.852868, -0.437292, -0.167341, -0.62824 )
 mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Gun" type="MeshInstance" parent="CameraLag"]
-transform = Transform( 0.413474, 0.0488926, -0.909202, -0.109359, 0.993995, 0.00371981, 0.903925, 0.0978912, 0.416338, 0.307676, -0.167341, -0.542933 )
+transform = Transform( 0.413474, 0.0488926, -0.909202, -0.109359, 0.993995, 0.00371981, 0.903925, 0.0978912, 0.416338, 0.345131, -0.167341, -0.542933 )
 visible = false
 mesh = SubResource( 5 )
 material/0 = null
@@ -152,14 +157,12 @@ color_ramp = SubResource( 9 )
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 material = SubResource( 11 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -80.0
-margin_top = -45.0
-margin_right = 80.0
-margin_bottom = 45.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = 22.5
+margin_right = -40.0
+margin_bottom = -22.5
 texture = ExtResource( 6 )
 stretch_mode = 4
 __meta__ = {
@@ -167,8 +170,8 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
-margin_right = 160.0
-margin_bottom = 90.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

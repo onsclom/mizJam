@@ -35,7 +35,7 @@ func _process(delta):
 	
 	var a = LagCam.global_transform.basis.get_rotation_quat()
 	var b = PlayerCam.global_transform.basis.get_rotation_quat()
-	var c = a.slerp(b,.1)
+	var c = a.slerp(b,.4)
 	LagCam.global_transform.basis = Basis(c)
 	pass
 	
@@ -47,7 +47,6 @@ func _process(delta):
 			
 			if Input.is_action_just_pressed("use"):
 				Ray.get_collider().activate(self)
-				print("USED")
 				
 	if Input.is_action_just_pressed("click"):
 		shoot()
@@ -62,7 +61,6 @@ func shoot():
 	if mouseFocused == false:
 		return
 	if gun.visible == true:
-		print("wow")
 		screenshakeCam.add_trauma(1.0)
 	if gun.visible == true:
 		gunParticles.restart()

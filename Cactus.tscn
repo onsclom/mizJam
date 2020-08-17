@@ -19,7 +19,7 @@ size = Vector2( 4, 4 )
 height = 2.0
 
 [node name="Cactus" type="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8152, 3, -2.95459 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 extra_cull_margin = 16384.0
 mesh = SubResource( 2 )
 material/0 = null

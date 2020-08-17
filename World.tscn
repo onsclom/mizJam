@@ -1,25 +1,20 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cactus.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Toon.tres" type="Material" id=3]
+[ext_resource path="res://Chunk.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mountain.tscn" type="PackedScene" id=4]
 [ext_resource path="res://stars.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GameManager.gd" type="Script" id=6]
 [ext_resource path="res://Chest.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Art/path.png" type="Texture" id=8]
-
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 45, 1, 45 )
-
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 90, 2, 90 )
+[ext_resource path="res://Ground.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Environment" id=3]
 background_mode = 1
 background_color = Color( 0, 1, 0, 1 )
 background_energy = 0.0
-ambient_light_color = Color( 0.0627451, 0, 0.121569, 1 )
+ambient_light_color = Color( 0.027451, 0, 0.0392157, 1 )
 ambient_light_sky_contribution = 0.0
 
 [sub_resource type="Shader" id=4]
@@ -66,24 +61,7 @@ size = Vector2( 8, 8 )
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 6 )
 
-[node name="Floor" type="StaticBody" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="Floor"]
-shape = SubResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Floor"]
-mesh = SubResource( 2 )
-material/0 = ExtResource( 3 )
-
-[node name="Floor2" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Floor2"]
-shape = SubResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Floor2"]
-mesh = SubResource( 2 )
-material/0 = ExtResource( 3 )
+[node name="Chunk" parent="." instance=ExtResource( 3 )]
 
 [node name="Character" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29143, 4.82611, 0.0372658 )
@@ -119,10 +97,13 @@ __meta__ = {
 }
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
-margin_left = 178.279
-margin_top = 2.51983
-margin_right = 218.279
-margin_bottom = 42.5198
+anchor_right = 1.0
+anchor_bottom = 0.995
+margin_left = 216.0
+margin_top = 11.5
+margin_right = 216.0
+margin_bottom = 11.95
+stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -138,10 +119,7 @@ render_target_update_mode = 3
 [node name="grounds" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
 
-[node name="Ground3" type="MeshInstance" parent="grounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.1, 8 )
-mesh = SubResource( 8 )
-material/0 = null
+[node name="Ground5" parent="grounds" instance=ExtResource( 9 )]
 
 [node name="Ground4" type="MeshInstance" parent="grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.1, 8 )
@@ -154,7 +132,7 @@ mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Chest" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2919, 2.5252, 7.84036 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2919, 1.85221, 7.84036 )
 
 [editable path="Character"]
 

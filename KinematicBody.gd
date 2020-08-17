@@ -1,6 +1,6 @@
 extends KinematicBody
 
-const MOVE_SPEED = 12
+const MOVE_SPEED = 12 
 const JUMP_FORCE = 20
 const GRAVITY = .98
 #9.8
@@ -70,7 +70,7 @@ func _physics_process(delta):
 		y_velo = -MAX_FALL_SPEED
 		
 	
-	var random = floor(noise.get_noise_2d(1.0, time*10)*10)
+	var random = floor(noise.get_noise_2d(1.0, time*20)*5)
 	$Light1.omni_range = 25.0 + random
 	$Light2.omni_range = 35.0 + random
 	
