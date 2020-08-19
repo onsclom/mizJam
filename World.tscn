@@ -1,47 +1,15 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cactus.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Chunk.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mountain.tscn" type="PackedScene" id=4]
-[ext_resource path="res://stars.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GameManager.gd" type="Script" id=6]
 [ext_resource path="res://Chest.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Art/path.png" type="Texture" id=8]
-[ext_resource path="res://Ground.tscn" type="PackedScene" id=9]
+[ext_resource path="res://sounds/song_1.ogg" type="AudioStream" id=10]
 
-[sub_resource type="Environment" id=3]
-background_mode = 1
-background_color = Color( 0, 1, 0, 1 )
-background_energy = 0.0
-ambient_light_color = Color( 0.027451, 0, 0.0392157, 1 )
-ambient_light_sky_contribution = 0.0
-
-[sub_resource type="Shader" id=4]
-code = "shader_type canvas_item;
-
-uniform sampler2D viewport;
-uniform float test;
-
-void fragment(){
-  COLOR = texture(SCREEN_TEXTURE, SCREEN_UV); //read from texture
-
-  if ( COLOR.rgb == vec3(0.0,1.0,0.0) )
-  {
-	COLOR = texture(viewport, SCREEN_UV);
-  }
-}"
-
-[sub_resource type="ViewportTexture" id=5]
-viewport_path = NodePath("ViewportContainer/Viewport")
-
-[sub_resource type="ShaderMaterial" id=6]
-resource_local_to_scene = true
-shader = SubResource( 4 )
-shader_param/test = null
-shader_param/viewport = SubResource( 5 )
-
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
 params_diffuse_mode = 4
 params_specular_mode = 3
@@ -54,86 +22,164 @@ albedo_color = Color( 1, 0.988235, 0.494118, 1 )
 albedo_texture = ExtResource( 8 )
 roughness = 0.01
 
-[sub_resource type="PlaneMesh" id=8]
-material = SubResource( 7 )
+[sub_resource type="PlaneMesh" id=3]
+material = SubResource( 2 )
 size = Vector2( 8, 8 )
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 1, 1, 1, 0 )
+background_energy = 0.0
+ambient_light_color = Color( 0.027451, 0, 0.0392157, 1 )
+ambient_light_sky_contribution = 0.0
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 6 )
 
 [node name="Chunk" parent="." instance=ExtResource( 3 )]
 
+[node name="Cactus2" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.54062, 3, -3.61294 )
+
+[node name="Cactus3" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.54062, 3, 10.3871 )
+
+[node name="Cactus4" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4594, 3, 16.3871 )
+
+[node name="Cactus5" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.4594, 3, 9.38705 )
+
+[node name="Cactus6" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4594, 3, -1.61295 )
+
+[node name="Cactus7" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4594, 3, -20.6129 )
+
+[node name="Cactus8" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4594, 3, -29.6129 )
+
+[node name="Cactus9" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.54062, 3, -30.6129 )
+
+[node name="Cactus10" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4594, 3, -2.61295 )
+
+[node name="Cactus11" parent="Chunk" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.54062, 3, 28.3871 )
+
+[node name="Mountain" parent="Chunk" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.378, 4.58864, -4.65835 )
+
+[node name="Mountain2" parent="Chunk" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5448, 3.10519, 3.53317 )
+
+[node name="Mountain3" parent="Chunk" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2459, 2.15219, 11.0333 )
+
+[node name="grounds" type="Spatial" parent="Chunk"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27458, -0.05, -4.65835 )
+
+[node name="Ground4" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground5" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground6" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground17" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground18" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground19" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground21" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 1.1, 8 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground7" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 1 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground8" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 15 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground9" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 22 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground10" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 30 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground11" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -7 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground12" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -14 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground13" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -21 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground14" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -29 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Ground15" type="MeshInstance" parent="Chunk/grounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 37 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Chest" parent="Chunk" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0173, 1.85221, 2.84036 )
+
 [node name="Character" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29143, 4.82611, 0.0372658 )
 
-[node name="Cactus" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="Character" index="0"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -2, 3 )
 
-[node name="Cactus2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8152, 3, 1.04541 )
+[node name="CamBase" parent="Character/Player/CamHolder" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
-[node name="Cactus3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.8152, 3, 15.0454 )
-
-[node name="Mountain" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6526, 4.58864, 0 )
-
-[node name="Mountain2" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8194, 3.10519, 8.19152 )
-
-[node name="Mountain3" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5205, 2.15219, 15.6916 )
+[node name="ColorRect" parent="Character/CanvasLayer/DeathScreen" index="0"]
+color = Color( 0, 0, 0, 0.780392 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 3 )
+environment = SubResource( 1 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource( 6 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ViewportContainer" type="ViewportContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 0.995
-margin_left = 216.0
-margin_top = 11.5
-margin_right = 216.0
-margin_bottom = 11.95
-stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 160, 90 )
-own_world = true
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="stars" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
-
-[node name="grounds" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
-
-[node name="Ground5" parent="grounds" instance=ExtResource( 9 )]
-
-[node name="Ground4" type="MeshInstance" parent="grounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.1, 8 )
-mesh = SubResource( 8 )
-material/0 = null
-
-[node name="Ground2" type="MeshInstance" parent="grounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 8 )
-mesh = SubResource( 8 )
-material/0 = null
-
-[node name="Chest" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2919, 1.85221, 7.84036 )
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+autoplay = true
 
 [editable path="Character"]
-
-[editable path="ViewportContainer/Viewport/stars"]

@@ -4,7 +4,7 @@
 [ext_resource path="res://star.gd" type="Script" id=2]
 
 [node name="star" type="Sprite3D"]
-pixel_size = 0.1
+pixel_size = 0.07
 billboard = 1
 double_sided = false
 texture = ExtResource( 1 )

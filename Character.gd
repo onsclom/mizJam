@@ -4,17 +4,30 @@ extends Spatial
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-onready var PlayerCam = $KinematicBody/CamHolder
+onready var PlayerCam = $Player/CamHolder
 onready var LagCam = $CameraLag
-onready var Ray = $KinematicBody/CamHolder/CamBase/RayCast
+onready var Ray = $Player/CamHolder/CamBase/RayCast
 onready var hoverInfo = $CanvasLayer/CenterContainer/Label
 
 onready var gun = $CameraLag/Gun
 onready var gunParticles = $CameraLag/Gun/CPUParticles
 
-onready var screenshakeCam = $KinematicBody/CamHolder/CamBase
+onready var screenshakeCam = $Player/CamHolder/CamBase
 
 onready var mouseFocused = false
+
+onready var progressBar = $CanvasLayer/ProgressBar
+onready var player = $Player
+
+onready var gunRay = $Player/CamHolder/CamBase/GunRay
+
+onready var deathScreen = $CanvasLayer/DeathScreen
+onready var ammoLabel = $CanvasLayer/ammo
+
+var alive = true
+var walking = false
+
+var ammo = 10
 
 func _input(event):
 	
@@ -26,12 +39,19 @@ func _input(event):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#GameSingleton.player = self
+	LagCam.global_transform.origin = PlayerCam.global_transform.origin
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	LagCam.global_transform.origin = PlayerCam.global_transform.origin
+	if not alive:
+		return
+	
+	LagCam.global_transform.origin.x = PlayerCam.global_transform.origin.x
+	LagCam.global_transform.origin.z = PlayerCam.global_transform.origin.z
+	LagCam.startHeight = PlayerCam.global_transform.origin.y
 	
 	var a = LagCam.global_transform.basis.get_rotation_quat()
 	var b = PlayerCam.global_transform.basis.get_rotation_quat()
@@ -53,15 +73,42 @@ func _process(delta):
 		
 		
 	mouseFocused = Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	progressBar.value = round(player.energy/player.maxEnergy*100)
 
 func activateGun():
+	ammoLabel.visible = true
 	gun.visible = true
 
 func shoot():
 	if mouseFocused == false:
 		return
 	if gun.visible == true:
+		
+		if ammo <= 0:
+			#PLAY OUT OF AMMO SOUND
+			return
+		ammo -= 1
+		
 		screenshakeCam.add_trauma(1.0)
-	if gun.visible == true:
 		gunParticles.restart()
 		gunParticles.emitting = true
+		$ShootSound.playing = true
+		
+	var collider = gunRay.get_collider()
+	if collider != null:
+		if "lives" in collider:
+			collider.lives -= 1
+			#change this to death later probly
+			GameSingleton.score += 1
+			#play hit sound?
+			$hitSound.playing = true
+			$Player.energy += 20
+			$Player.energy = min($Player.energy, $Player.maxEnergy)
+			
+
+func death():
+	if not alive:
+		return
+	alive = false
+	print("dead in player")
+	deathScreen.visible = true
