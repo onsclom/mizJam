@@ -30,6 +30,9 @@ var maxEnergy = 100
 var energyFillRate = 20
 var energyUseRate = 50
 
+var move_vec = Vector3()
+var dir = Vector3()
+
 
 func _ready():
 	noise.seed = randi()
@@ -55,7 +58,7 @@ func _physics_process(delta):
 	time += delta
 	
 	
-	var move_vec = Vector3()
+	move_vec = Vector3()
 	if Input.is_action_pressed("move_forwards"):
 		move_vec.z -= 1
 	if Input.is_action_pressed("move_backwards"):
@@ -95,6 +98,7 @@ func _physics_process(delta):
 	
 	move_vec = move_vec.rotated(Vector3(0, 1, 0), rotation.y)
 	move_vec *= MOVE_SPEED
+	dir = move_vec
 	move_vec.y = y_velo
 	y_velo = move_and_slide(move_vec, Vector3(0, 1, 0)).y
 	

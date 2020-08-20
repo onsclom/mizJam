@@ -18,11 +18,11 @@ func _ready():
 func activate(player):
 	hoverText = null
 	get_parent().mesh.material.albedo_texture = openTexture
-	$Sound.playing = true
 	if type == 0:
 		player.activateGun()
 	else:
 		player.ammo += 4
+	get_parent().queue_free()
 	#this also makes it unusable
 	
 

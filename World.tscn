@@ -9,7 +9,7 @@
 [ext_resource path="res://Art/path.png" type="Texture" id=8]
 [ext_resource path="res://sounds/song_1.ogg" type="AudioStream" id=10]
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=1]
 flags_transparent = true
 params_diffuse_mode = 4
 params_specular_mode = 3
@@ -22,11 +22,11 @@ albedo_color = Color( 1, 0.988235, 0.494118, 1 )
 albedo_texture = ExtResource( 8 )
 roughness = 0.01
 
-[sub_resource type="PlaneMesh" id=3]
-material = SubResource( 2 )
+[sub_resource type="PlaneMesh" id=2]
+material = SubResource( 1 )
 size = Vector2( 8, 8 )
 
-[sub_resource type="Environment" id=1]
+[sub_resource type="Environment" id=3]
 background_mode = 1
 background_color = Color( 1, 1, 1, 0 )
 background_energy = 0.0
@@ -82,82 +82,82 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27458, -0.05, -4.65835 )
 
 [node name="Ground4" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground5" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground6" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground17" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground18" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground19" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground21" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 1.1, 8 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground7" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 1 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground8" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 15 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground9" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 22 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground10" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 30 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground11" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -7 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground12" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -14 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground13" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -21 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground14" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, -29 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Ground15" type="MeshInstance" parent="Chunk/grounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 37 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Chest" parent="Chunk" instance=ExtResource( 7 )]
@@ -176,7 +176,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 color = Color( 0, 0, 0, 0.780392 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
+environment = SubResource( 3 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )

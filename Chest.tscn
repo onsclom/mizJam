@@ -18,6 +18,7 @@ material = SubResource( 1 )
 size = Vector2( 2, 2 )
 
 [sub_resource type="BoxShape" id=3]
+extents = Vector3( 1, 1, 2 )
 
 [node name="Chest" type="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )

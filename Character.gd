@@ -67,6 +67,7 @@ func _process(delta):
 			
 			if Input.is_action_just_pressed("use"):
 				Ray.get_collider().activate(self)
+				$chestSound.playing = true
 				
 	if Input.is_action_just_pressed("click"):
 		shoot()
@@ -80,19 +81,18 @@ func activateGun():
 	gun.visible = true
 
 func shoot():
-	if mouseFocused == false:
+	if mouseFocused == false or not gun.visible:
 		return
-	if gun.visible == true:
 		
-		if ammo <= 0:
-			#PLAY OUT OF AMMO SOUND
-			return
-		ammo -= 1
-		
-		screenshakeCam.add_trauma(1.0)
-		gunParticles.restart()
-		gunParticles.emitting = true
-		$ShootSound.playing = true
+	if ammo <= 0:
+		#PLAY OUT OF AMMO SOUND
+		return
+	ammo -= 1
+	
+	screenshakeCam.add_trauma(1.0)
+	gunParticles.restart()
+	gunParticles.emitting = true
+	$ShootSound.playing = true
 		
 	var collider = gunRay.get_collider()
 	if collider != null:
@@ -109,6 +109,8 @@ func shoot():
 func death():
 	if not alive:
 		return
+	$deathSound.playing = true
+	$Player/CamHolder/CamBase.add_trauma(1.0)
 	alive = false
 	print("dead in player")
 	deathScreen.visible = true

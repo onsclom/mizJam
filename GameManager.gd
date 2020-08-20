@@ -25,9 +25,10 @@ var mountainScenes = [preload("res://Mountains1.tscn"),preload("res://Mountains2
 
 var rng = RandomNumberGenerator.new()
 
-var spawnTime = 5
+var spawnTime = 3
+var minSpawnTime = 1
 #spawnTime will be decreased by spawnTime*spawnSpeedup every second
-var spawnSpeedup = .01
+var spawnSpeedup = 0
 var spawnCount = 0
 var monsterSpawnDist = 60
 
@@ -51,6 +52,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	spawnTime = lerp(spawnTime, minSpawnTime, .025*delta)
 	#sync the background star world and current world
 	
 	var playerGridPos = Vector2(player.global_transform.origin.x / chunkSize, player.global_transform.origin.z / chunkSize)
@@ -124,7 +126,7 @@ func chunkStuffGenerate(chunk, vector):
 					chunk.add_child(newMount)
 					newMount.transform.origin.x = localPos.x
 					newMount.transform.origin.z = localPos.y
-				elif rng.randf_range(0.0,1.0) > .95:
+				elif rng.randf_range(0.0,1.0) > .97:
 					var newChest = chestScene.instance()
 					chunk.add_child(newChest)
 					newChest.transform.origin.x = localPos.x
