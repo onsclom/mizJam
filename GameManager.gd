@@ -25,7 +25,7 @@ var mountainScenes = [preload("res://Mountains1.tscn"),preload("res://Mountains2
 
 var rng = RandomNumberGenerator.new()
 
-var spawnTime = 3
+export var spawnTime = 3
 var minSpawnTime = 1
 #spawnTime will be decreased by spawnTime*spawnSpeedup every second
 var spawnSpeedup = 0
@@ -52,7 +52,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	spawnTime = lerp(spawnTime, minSpawnTime, .025*delta)
+	if spawnTime != -1:
+		spawnTime = lerp(spawnTime, minSpawnTime, .025*delta)
 	#sync the background star world and current world
 	
 	var playerGridPos = Vector2(player.global_transform.origin.x / chunkSize, player.global_transform.origin.z / chunkSize)
@@ -84,12 +85,18 @@ func _process(delta):
 			if chunks[vector] != null:
 				chunks[vector].visible = false
 				currentlyActive.erase(vector)
-				
-	spawnCount += delta
-	spawnTime -= spawnSpeedup*spawnTime*delta
-	monsterSpawning()
+	
+	
+	if GameSingleton.gameStarted:			
+		spawnCount += delta
+		spawnTime -= spawnSpeedup*spawnTime*delta
+		
+		
+		monsterSpawning()
 	
 func monsterSpawning():
+	if spawnTime <= -1:
+		return
 	if $Character.alive and spawnCount > spawnTime:
 		spawnCount -= spawnTime
 		var newScorp = scorpion.instance()

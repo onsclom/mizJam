@@ -1,15 +1,18 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://StartScreenMovement.gd" type="Script" id=1]
 [ext_resource path="res://Cactus.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Chunk.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mountain.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Art/Poco.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://sounds/step.wav" type="AudioStream" id=5]
 [ext_resource path="res://GameManager.gd" type="Script" id=6]
 [ext_resource path="res://Chest.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Art/path.png" type="Texture" id=8]
-[ext_resource path="res://Sens.gd" type="Script" id=9]
-[ext_resource path="res://sounds/song_1.ogg" type="AudioStream" id=10]
+[ext_resource path="res://sounds/hit.wav" type="AudioStream" id=9]
+[ext_resource path="res://sounds/death.wav" type="AudioStream" id=11]
+[ext_resource path="res://ScreenShake.gd" type="Script" id=12]
+[ext_resource path="res://sounds/shoot.wav" type="AudioStream" id=13]
+[ext_resource path="res://sounds/chest.wav" type="AudioStream" id=14]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_transparent = true
@@ -28,14 +31,9 @@ roughness = 0.01
 material = SubResource( 1 )
 size = Vector2( 8, 8 )
 
-[sub_resource type="DynamicFont" id=4]
-size = 10
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_top = -4
-font_data = ExtResource( 5 )
+[sub_resource type="CapsuleShape" id=3]
 
-[sub_resource type="Environment" id=3]
+[sub_resource type="Environment" id=4]
 background_mode = 1
 background_color = Color( 1, 1, 1, 0 )
 background_energy = 0.0
@@ -44,6 +42,7 @@ ambient_light_sky_contribution = 0.0
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 6 )
+spawnTime = -1
 
 [node name="Chunk" parent="." instance=ExtResource( 3 )]
 
@@ -172,44 +171,82 @@ material/0 = null
 [node name="Chest" parent="Chunk" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0173, 1.85221, 2.84036 )
 
-[node name="Character" parent="." instance=ExtResource( 1 )]
+[node name="Character" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29143, 4.82611, 0.0372658 )
 
-[node name="Player" parent="Character" index="0"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -2, 3 )
+[node name="Player" type="KinematicBody" parent="Character"]
+transform = Transform( 1, 0, -1.06581e-14, 2.75853e-15, 0.965926, 0.258819, 1.0295e-14, -0.258819, 0.965926, 0, 3, 3 )
+script = ExtResource( 1 )
 
-[node name="CamBase" parent="Character/Player/CamHolder" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="Character/Player"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 3 )
+disabled = true
 
-[node name="ColorRect" parent="Character/CanvasLayer/DeathScreen" index="0"]
-color = Color( 0, 0, 0, 0.780392 )
+[node name="Light1" type="OmniLight" parent="Character/Player"]
+light_energy = 0.13
+light_indirect_energy = 0.0
+light_specular = 0.0
+light_bake_mode = 2
+shadow_bias = 10.0
+omni_range = 35.0
+omni_attenuation = 1e-05
+omni_shadow_detail = 0
 
-[node name="Sens" type="Label" parent="Character/CanvasLayer" index="6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -10.0
-margin_right = -2.0
-margin_bottom = -83.0
-custom_fonts/font = SubResource( 4 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 0
-custom_constants/shadow_offset_y = 0
-custom_constants/shadow_as_outline = 0
-text = "[-] 5/10 [+]"
-align = 2
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-activePos = Vector2( 0, 2 )
-inactivePos = Vector2( 0, -10 )
+[node name="Light2" type="OmniLight" parent="Character/Player"]
+light_energy = 0.13
+light_indirect_energy = 0.0
+light_specular = 0.0
+light_bake_mode = 2
+shadow_bias = 10.0
+omni_range = 65.0
+omni_attenuation = 1e-05
+omni_shadow_mode = 0
+omni_shadow_detail = 0
+
+[node name="CamHolder" type="Spatial" parent="Character/Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.142, 0 )
+
+[node name="CamBase" type="Camera" parent="Character/Player/CamHolder"]
+transform = Transform( 1, 4.23516e-22, 3.38813e-21, -6.35275e-22, 1, 2.98023e-08, -3.38813e-21, -2.98023e-08, 1, 0, 3.86371, 1.03528 )
+cull_mask = 524287
+current = true
+far = 70.0
+script = ExtResource( 12 )
+
+[node name="RayCast" type="RayCast" parent="Character/Player/CamHolder/CamBase"]
+enabled = true
+cast_to = Vector3( 0, 0, -3 )
+
+[node name="GunRay" type="RayCast" parent="Character/Player/CamHolder/CamBase"]
+enabled = true
+cast_to = Vector3( 0, 0, -60 )
+
+[node name="DebugCamera" type="Camera" parent="Character/Player"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 164.221, 0 )
+far = 1000.0
+
+[node name="StepSound" type="AudioStreamPlayer" parent="Character/Player"]
+stream = ExtResource( 5 )
+volume_db = -20.194
+
+[node name="RayCast" type="RayCast" parent="Character/Player"]
+cast_to = Vector3( 0, 0, -10 )
+
+[node name="Listener" type="Listener" parent="Character/Player"]
+current = true
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="Character"]
+stream = ExtResource( 13 )
+
+[node name="hitSound" type="AudioStreamPlayer" parent="Character"]
+stream = ExtResource( 9 )
+
+[node name="chestSound" type="AudioStreamPlayer" parent="Character"]
+stream = ExtResource( 14 )
+
+[node name="deathSound" type="AudioStreamPlayer" parent="Character"]
+stream = ExtResource( 11 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 3 )
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
-autoplay = true
-
-[editable path="Character"]
+environment = SubResource( 4 )

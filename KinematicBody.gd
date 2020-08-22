@@ -6,8 +6,8 @@ const GRAVITY = .98
 #9.8
 const MAX_FALL_SPEED = 30
 
-const H_LOOK_SENS = .5
-const V_LOOK_SENS = .5
+var H_LOOK_SENS = .1
+var V_LOOK_SENS = .1
 
 var runningMod = 1.5
 
@@ -45,11 +45,9 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		cam.rotation_degrees.x -= event.relative.y * V_LOOK_SENS
+		cam.rotation_degrees.x -= event.relative.y * V_LOOK_SENS * GameSingleton.playerSens
 		cam.rotation_degrees.x = clamp(cam.rotation_degrees.x, -90, 90)
-		rotation_degrees.y -= event.relative.x * H_LOOK_SENS
-	if Input.is_action_just_pressed("left_click"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		rotation_degrees.y -= event.relative.x * H_LOOK_SENS * GameSingleton.playerSens
 
 func _physics_process(delta):
 	if get_parent().alive == false:

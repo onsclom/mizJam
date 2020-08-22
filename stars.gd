@@ -8,6 +8,8 @@ var starAmount = 250
 var star = preload("res://star.tscn")
 var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
+
+export var startScreen = false
 func _ready():
 	rng.randomize()
 	for x in range(starAmount):
@@ -25,4 +27,8 @@ func _ready():
 func _process(delta):
 	#if get_node("../Camera2")!=null:
 	#	rotation_degrees.z = -get_node("../Camera2").rotation_degrees.z
+	
+	if startScreen:
+		$Camera.rotation_degrees.x += delta*1
+		$Camera.rotation_degrees.z += delta*1
 	pass

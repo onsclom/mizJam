@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://KinematicBody.gd" type="Script" id=1]
 [ext_resource path="res://Art/torch.png" type="Texture" id=2]
@@ -17,6 +17,9 @@
 [ext_resource path="res://ammoLabel.gd" type="Script" id=15]
 [ext_resource path="res://sounds/chest.wav" type="AudioStream" id=16]
 [ext_resource path="res://sounds/death.wav" type="AudioStream" id=17]
+[ext_resource path="res://sounds/outOfAmmo.wav" type="AudioStream" id=18]
+[ext_resource path="res://Art/hitmarker.png" type="Texture" id=19]
+[ext_resource path="res://ammoAdd.gd" type="Script" id=20]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -101,6 +104,72 @@ expand_margin_bottom = 1.0
 bg_color = Color( 0, 0, 0, 1 )
 border_color = Color( 0.290196, 0.290196, 0.290196, 1 )
 
+[sub_resource type="Animation" id=17]
+resource_name = "hintText"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationPlayer/Label2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "hitmarker"
+tracks/0/type = "value"
+tracks/0/path = NodePath("hit/hitMarker:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "ammoAdd"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ammoAdd/ammoAddLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Curve" id=21]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=19]
+resource_name = "ammoAdd"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("scoreAdd/ammoAddLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="Character" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0030573, 0.00353694, -0.0019815 )
 script = ExtResource( 3 )
@@ -150,6 +219,7 @@ cast_to = Vector3( 0, 0, -3 )
 [node name="GunRay" type="RayCast" parent="Player/CamHolder/CamBase"]
 enabled = true
 cast_to = Vector3( 0, 0, -60 )
+collision_mask = 2
 
 [node name="DebugCamera" type="Camera" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 164.221, 0 )
@@ -170,7 +240,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1289, 0 )
 script = ExtResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="CameraLag"]
-transform = Transform( 0.508205, 0.706588, 0.492404, -0.852868, 0.492404, 0.173648, -0.119764, -0.508204, 0.852868, -0.437292, -0.167341, -0.62824 )
+transform = Transform( 0.508205, 0.706588, 0.492404, -0.852868, 0.492404, 0.173648, -0.119764, -0.508204, 0.852868, -0.437292, -0.244318, -0.62824 )
 mesh = SubResource( 3 )
 material/0 = null
 script = ExtResource( 11 )
@@ -203,10 +273,6 @@ color_ramp = SubResource( 9 )
 material = SubResource( 11 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 22.5
-margin_right = -40.0
-margin_bottom = -22.5
 texture = ExtResource( 6 )
 stretch_mode = 4
 __meta__ = {
@@ -250,7 +316,6 @@ __meta__ = {
 }
 
 [node name="ammo" type="Label" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.840897
@@ -320,6 +385,134 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+anims/hintText = SubResource( 17 )
+
+[node name="Label2" type="Label" parent="CanvasLayer/AnimationPlayer"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_bottom = -15.0
+custom_fonts/font = ExtResource( 14 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 1
+text = "find bullets to survive"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hit" type="AnimationPlayer" parent="CanvasLayer"]
+anims/hitmarker = SubResource( 18 )
+
+[node name="hitMarker" type="TextureRect" parent="CanvasLayer/hit"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -45.0
+margin_right = 80.0
+margin_bottom = 45.0
+texture = ExtResource( 19 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ammoAdd" type="AnimationPlayer" parent="CanvasLayer"]
+anims/ammoAdd = SubResource( 20 )
+script = ExtResource( 20 )
+colors = [ Color( 0.560784, 1, 0.815686, 1 ), Color( 0.498039, 1, 0.541176, 1 ), Color( 0.87451, 0.478431, 1, 1 ), Color( 1, 0.498039, 0.498039, 1 ) ]
+
+[node name="ammoAddLabel" type="Label" parent="CanvasLayer/ammoAdd"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 67.0
+margin_right = 1.0
+custom_fonts/font = ExtResource( 14 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 1
+text = "+4"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="particles" type="CPUParticles2D" parent="CanvasLayer/ammoAdd"]
+position = Vector2( 79.7628, 71.5359 )
+z_index = -1
+emitting = false
+amount = 40
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+emission_shape = 2
+emission_rect_extents = Vector2( 5, 3 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 1.0
+angle = 720.0
+angle_random = 1.0
+scale_amount = 5.0
+scale_amount_curve = SubResource( 21 )
+
+[node name="scoreAdd" type="AnimationPlayer" parent="CanvasLayer"]
+anims/ammoAdd = SubResource( 19 )
+script = ExtResource( 20 )
+colors = [ Color( 0.560784, 1, 0.815686, 1 ), Color( 0.498039, 1, 0.541176, 1 ), Color( 0.87451, 0.478431, 1, 1 ), Color( 1, 0.498039, 0.498039, 1 ) ]
+
+[node name="particles" type="CPUParticles2D" parent="CanvasLayer/scoreAdd"]
+position = Vector2( 30.4035, 14.9393 )
+z_index = -1
+emitting = false
+amount = 40
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+emission_shape = 2
+emission_rect_extents = Vector2( 5, 3 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 1.0
+angle = 720.0
+angle_random = 1.0
+scale_amount = 5.0
+scale_amount_curve = SubResource( 21 )
+
+[node name="ammoAddLabel" type="Label" parent="CanvasLayer/scoreAdd"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -49.0554
+margin_top = 10.3394
+margin_right = -49.0554
+margin_bottom = -60.6606
+custom_fonts/font = ExtResource( 14 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 1
+text = "+4"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 
@@ -331,3 +524,7 @@ stream = ExtResource( 16 )
 
 [node name="deathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
+
+[node name="outAmmo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+volume_db = -17.165

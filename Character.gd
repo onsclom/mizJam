@@ -29,14 +29,6 @@ var walking = false
 
 var ammo = 10
 
-func _input(event):
-	
-	if event.is_action_pressed("click"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	elif event.is_action_pressed("escape"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#GameSingleton.player = self
@@ -79,13 +71,19 @@ func _process(delta):
 func activateGun():
 	ammoLabel.visible = true
 	gun.visible = true
+	
+	GameSingleton.gameStarted = true
+	if GameSingleton.firstTime == true:
+		GameSingleton.firstTime = false
+		$CanvasLayer/AnimationPlayer.play("hintText")
 
 func shoot():
 	if mouseFocused == false or not gun.visible:
 		return
 		
 	if ammo <= 0:
-		#PLAY OUT OF AMMO SOUND
+		#PLAY OUT OF AMMO SOUND\
+		$outAmmo.playing = true
 		return
 	ammo -= 1
 	
@@ -100,10 +98,13 @@ func shoot():
 			collider.lives -= 1
 			#change this to death later probly
 			GameSingleton.score += 1
+			$CanvasLayer/scoreAdd.addAmmo(1) #addAmmo named poorly lol but gamejam
 			#play hit sound?
 			$hitSound.playing = true
 			$Player.energy += 20
 			$Player.energy = min($Player.energy, $Player.maxEnergy)
+			$CanvasLayer/hit.stop()
+			$CanvasLayer/hit.play("hitmarker")
 			
 
 func death():

@@ -21,7 +21,9 @@ func activate(player):
 	if type == 0:
 		player.activateGun()
 	else:
-		player.ammo += 4
+		if player.gun.visible == true:
+			player.ammo += 4
+			player.get_node("CanvasLayer/ammoAdd").addAmmo(4)
 	get_parent().queue_free()
 	#this also makes it unusable
 	
