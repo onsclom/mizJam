@@ -31,6 +31,7 @@ var ammo = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), 3)
 	#GameSingleton.player = self
 	LagCam.global_transform.origin = PlayerCam.global_transform.origin
 	pass # Replace with function body.
@@ -115,3 +116,4 @@ func death():
 	alive = false
 	print("dead in player")
 	deathScreen.visible = true
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -20)

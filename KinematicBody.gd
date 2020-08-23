@@ -76,11 +76,15 @@ func _physics_process(delta):
 			energy = max(0, energy)
 			running = true
 		#else walking
-		
 	else:
 		energy += delta * 20
 		energy = min(maxEnergy, energy)
 		#walking
+		
+	if get_parent().ammo == 0:
+		#no ammo speed boost
+		move_vec *= 1.5
+		
 		
 	if move_vec != Vector3(0.0,0.0,0.0):
 		get_parent().walking = true

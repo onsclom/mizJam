@@ -135,7 +135,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=19]
 resource_name = "ammoAdd"
 length = 3.0
 tracks/0/type = "value"
@@ -151,11 +151,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Curve" id=21]
+[sub_resource type="Curve" id=20]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Animation" id=19]
-resource_name = "ammoAdd"
+[sub_resource type="Animation" id=21]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("scoreAdd/ammoAddLabel:modulate")
@@ -214,7 +213,7 @@ script = ExtResource( 7 )
 
 [node name="RayCast" type="RayCast" parent="Player/CamHolder/CamBase"]
 enabled = true
-cast_to = Vector3( 0, 0, -3 )
+cast_to = Vector3( 0, 0, -5 )
 
 [node name="GunRay" type="RayCast" parent="Player/CamHolder/CamBase"]
 enabled = true
@@ -316,6 +315,7 @@ __meta__ = {
 }
 
 [node name="ammo" type="Label" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.840897
@@ -425,7 +425,7 @@ __meta__ = {
 }
 
 [node name="ammoAdd" type="AnimationPlayer" parent="CanvasLayer"]
-anims/ammoAdd = SubResource( 20 )
+anims/ammoAdd = SubResource( 19 )
 script = ExtResource( 20 )
 colors = [ Color( 0.560784, 1, 0.815686, 1 ), Color( 0.498039, 1, 0.541176, 1 ), Color( 0.87451, 0.478431, 1, 1 ), Color( 1, 0.498039, 0.498039, 1 ) ]
 
@@ -466,10 +466,10 @@ initial_velocity_random = 1.0
 angle = 720.0
 angle_random = 1.0
 scale_amount = 5.0
-scale_amount_curve = SubResource( 21 )
+scale_amount_curve = SubResource( 20 )
 
 [node name="scoreAdd" type="AnimationPlayer" parent="CanvasLayer"]
-anims/ammoAdd = SubResource( 19 )
+anims/ammoAdd = SubResource( 21 )
 script = ExtResource( 20 )
 colors = [ Color( 0.560784, 1, 0.815686, 1 ), Color( 0.498039, 1, 0.541176, 1 ), Color( 0.87451, 0.478431, 1, 1 ), Color( 1, 0.498039, 0.498039, 1 ) ]
 
@@ -490,7 +490,7 @@ initial_velocity_random = 1.0
 angle = 720.0
 angle_random = 1.0
 scale_amount = 5.0
-scale_amount_curve = SubResource( 21 )
+scale_amount_curve = SubResource( 20 )
 
 [node name="ammoAddLabel" type="Label" parent="CanvasLayer/scoreAdd"]
 modulate = Color( 1, 1, 1, 0 )

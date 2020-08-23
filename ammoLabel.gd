@@ -14,4 +14,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	text = str(GameSingleton.player.get_parent().ammo)
+	
+	if 	GameSingleton.player.get_parent().ammo == 0:
+		text = "* out of ammo *"
+	
 	pass
